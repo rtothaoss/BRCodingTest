@@ -114,7 +114,7 @@ export class Restaurants extends Component {
                             </Jumbotron>
                             <Jumbotron className='container' style={styles.map}>
                                     <GoogleMaps
-                                    mapStyle={isntMobile ? { width: '98.6%', height: '26%', position: 'relative' } : { width: '93%', height: '22%', position: 'relative' }}
+                                    mapStyle={{ width: '100%', height: '100%', position: 'absolute', top: '0', right: '0', bottom: '0', left: '0'}}
                                     selectedPlace={this.state.restaurantName}
                                     lat={this.state.restaurantLat}
                                     lng={this.state.restaurantLong}
@@ -202,6 +202,7 @@ const styles = {
     map: {
         marginBottom: '0px',
         height: '180px',
+        position: 'relative'
     }
 }
 
