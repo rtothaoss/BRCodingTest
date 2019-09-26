@@ -51,21 +51,23 @@ const styles = {
     backgroundColor: '#43E895',
     display: 'flex',
     width: '100%',
-    paddingTop: '35px',
-    paddingBottom: '10px'
+    paddingTop: '25px',
+    height: '60px'
   },
   title: {
     fontSize: '17px',
     color: '#FFFFFF',
     fontFamily: 'AvenirNextBold',
     margin: '0px auto',
-    paddingLeft: '4%'
+    paddingLeft: '4%',
+    // marginLeft: '47.5%'
     
   },
   mapButton: {
     height: '35px',
     width: '35px',
-    marginRight: '2%'
+    marginRight: '2%',
+    paddingBottom: '5px',
   }
 }
 

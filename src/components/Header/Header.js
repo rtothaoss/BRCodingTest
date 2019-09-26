@@ -1,5 +1,4 @@
 import React from 'react'
-import classes from './Header.module.css'
 
 const Header = ({className, style, titleStyle, title, children}) => {
     return (
