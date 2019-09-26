@@ -3,6 +3,7 @@ import Restaurants from './containers/Restaurants/Restaurants'
 import Header from './components/Header/Header'
 import Button from './components/Button/Button'
 import MapButton from './assets/images/icon_map@2x.png'
+import './App.css'
 
 export class App extends Component {
 

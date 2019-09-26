@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import Jumbotron from '../../components/Jumbotron/Jumbotron'
+import Button from '../../components/Button/Button'
 import Header from '../../components/Header/Header'
 import Drawer from 'react-motion-drawer'
 import GoogleMaps from '../../utils/GoogleMaps/GoogleMaps'
+import BackButton from '../../assets/images/ic_webBack@2x.png'
+import MapButton from '../../assets/images/icon_map@2x.png'
 import axios from 'axios'
+
+
 
 export class Restaurants extends Component {
 
@@ -19,12 +24,25 @@ export class Restaurants extends Component {
         restaurantZip: '',
         restaurantState: '',
         restaurantLat: '',
-        restaurantLong: ''
-        
+        restaurantLong: '',
+        width: ''
+
     }
+
+    handleWindowSizeChange = () => {
+        this.setState({ width: window.innerWidth });
+      };
 
     componentDidMount() {
         this.getRestaurantInfo()
+        this.deviceUsed()
+    }
+
+    deviceUsed() {
+        this.setState({
+            width: window.innerWidth
+        })
+        window.addEventListener('resize', this.handleWindowSizeChange)
     }
 
     getRestaurantInfo() {
@@ -37,14 +55,15 @@ export class Restaurants extends Component {
 
     render() {
 
-        const { drawerOpen } = this.state
+        const { drawerOpen, width } = this.state
+        const isntMobile = width >= 500;
 
         return (
 
             <div className="container">
                 <div className="row">
                     {this.state.restaurantData.map(restaurant => (
-                        <div className="col-sm-6" key={restaurant.name}>
+                        <div className="col-sm-6" style={isntMobile ? {padding: '15px 15px', overflow: 'hidden'} : {padding: '0px 0px', overflow: 'hidden'}} key={restaurant.name}>
                             <Jumbotron
                                 style={styles.jumbo}
                                 backgroundImage={restaurant.backgroundImageURL}
@@ -75,31 +94,44 @@ export class Restaurants extends Component {
                         noTouchClose={false}
                         onChange={open => this.setState({ drawerOpen: open })} >
                         <Jumbotron style={{ minHeight: '100vh', overflow: 'hidden', padding: '0px 0px', margin: '0px auto' }}>
-                            <Header
-                                title={"Lunch Tyme"}
-                                style={styles.header}
-                                titleStyle={styles.title}
-                                className='text-center'
+                            <Jumbotron
+                                style={styles.header2}
                             >
-                            </Header>
-                            <Jumbotron style={styles.map}>
-                                <GoogleMaps
+                                    <Button
+                                        alt={'Back'}
+                                        src={BackButton}
+                                        style={{height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px'}}
+                                        
+
+                                    />
+                                    <p style={{marginLeft: '25%', fontSize: '17px', color: '#FFFFFF', fontFamily: 'AvenirNextBold', margin: '0px auto',}}>Lunch Tyme</p>
+                             
+                                    <Button
+                                        alt={'Map'}
+                                        src={MapButton}
+                                        style={{height: '35px', width: '35px', marginRight: '2%', paddingBottom: '5px'}}
+                                    />
+                            </Jumbotron>
+                            <Jumbotron className='container' style={styles.map}>
+                                    <GoogleMaps
+                                    mapStyle={isntMobile ? { width: '98.6%', height: '26%', position: 'relative' } : { width: '93%', height: '22%', position: 'relative' }}
                                     selectedPlace={this.state.restaurantName}
                                     lat={this.state.restaurantLat}
                                     lng={this.state.restaurantLong}
                                 />
+
                             </Jumbotron>
                             <Jumbotron
                                 style={styles.header1}
                             >
-                            <p style={{margin: '0px auto', padding: '0px 0px', fontSize: '16px', fontFamily: 'AvenirNextBold', color: '#FFFFFF', marginLeft: '12px'}}>{this.state.restaurantName}</p>
-                            <p style={{margin: '0px auto', padding: '0px 0px', fontSize: '12px', fontFamily: 'AvenirNextRegular', color: '#FFFFFF', marginLeft: '12px'}}>{this.state.restaurantCat}</p>
+                                <p style={{ margin: '0px auto', padding: '0px 0px', fontSize: '16px', fontFamily: 'AvenirNextBold', color: '#FFFFFF', marginLeft: '12px' }}>{this.state.restaurantName}</p>
+                                <p style={{ margin: '0px auto', padding: '0px 0px', fontSize: '12px', fontFamily: 'AvenirNextRegular', color: '#FFFFFF', marginLeft: '12px' }}>{this.state.restaurantCat}</p>
                             </Jumbotron>
                             <Jumbotron>
-                                <h4 style={{marginTop: '16px', marginLeft: '12px', fontSize: '16px'}}>{this.state.restaurantAddress}</h4>
-                                <h4 style={{marginLeft: '12px', fontSize: '16px'}}>{`${this.state.restaurantCity}, ${this.state.restaurantState} ${this.state.restaurantZip}`}</h4>
-                                <h4 style={{marginTop: '26px', marginLeft: '12px', fontSize: '16px'}}>{this.state.restaurantPhone}</h4>
-                                <h4 style={{marginTop: '26px', marginLeft: '12px', fontSize: '16px'}}>{this.state.restaurantTwitter}</h4>
+                                <h4 style={{ marginTop: '16px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantAddress}</h4>
+                                <h4 style={{ marginLeft: '12px', fontSize: '16px' }}>{`${this.state.restaurantCity}, ${this.state.restaurantState} ${this.state.restaurantZip}`}</h4>
+                                <h4 style={{ marginTop: '26px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantPhone}</h4>
+                                <h4 style={{ marginTop: '26px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantTwitter}</h4>
                             </Jumbotron>
                         </Jumbotron>
                     </Drawer>
@@ -151,6 +183,14 @@ const styles = {
         height: '60px',
         // display: 'block'
     },
+    header2: {
+        backgroundColor: '#43E895',
+        display: 'flex',
+        width: '100%',
+        paddingTop: '25px',
+        paddingBottom: '10px',
+        height: '60px',
+    },
     title: {
         fontSize: '17px',
         color: '#FFFFFF',
@@ -161,8 +201,7 @@ const styles = {
     },
     map: {
         marginBottom: '0px',
-        height: '250px',
-        width: '100%'
+        height: '180px',
     }
 }
 

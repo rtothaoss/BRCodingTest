@@ -9,9 +9,9 @@ export class MapContainer extends Component {
 
         return (
             <Map
-                style={{ width: '98.6%', height: '27%', position: 'relative' }}
+                style={this.props.mapStyle}
                 center={{lat: this.props.lat, lng: this.props.lng }}
-                google={this.props.google} zoom={16}>
+                google={this.props.google} zoom={15}>
 
                 <Marker
                     onClick={this.onMarkerClick}
