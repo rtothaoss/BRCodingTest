@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@font-face {
+  font-family: 'AvenirNextBold';
+  src: local('AvenirNextBold'), url(./assets/fonts/AvenirNext-DemiBold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'AvenirNextRegular';
+  src: local('AvenirNextRegular'), url(./assets/fonts/AvenirNext-Regular.ttf) format('truetype');
+}
