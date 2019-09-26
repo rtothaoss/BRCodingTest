@@ -1,0 +1,19 @@
+import * as actionTypes from '../actions/actionTypes'
+
+const INITIAL_STATE = {
+    restaurantData: []
+}
+
+const reducer = (state = INITIAL_STATE, action) => {
+    switch(action.type) {
+        case actionTypes.ADD_RESTURANT_DATA:
+            return{
+                ...state,
+                restaurantData: action.restData
+            }
+            default:
+                return state
+    } 
+}
+
+export default reducer

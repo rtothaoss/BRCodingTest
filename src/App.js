@@ -12,19 +12,6 @@ export class App extends Component {
   }
 
   render() {
-
-    // let backBtn = (
-    //   <Button 
-    //   alt={'Map'}
-    //   src={MapButton}
-    //   style={styles.mapButton}
-    // />)
-
-    // if(needBackButton) {
-
-    // }
-
-
  
     return (
       <div>

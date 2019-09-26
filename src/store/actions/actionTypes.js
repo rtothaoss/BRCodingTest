@@ -1,0 +1,1 @@
+export const ADD_RESTURANT_DATA = 'ADD_RESTURANT_DATA'
