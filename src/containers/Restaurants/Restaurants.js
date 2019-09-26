@@ -23,20 +23,11 @@ export class Restaurants extends Component {
             .catch((err) => console.log(err))
     }
 
-    viewRestaurant = (restaurant) => {
-        if (!this.state.drawerOpen) {
-            this.setState({
-                drawerOpen: true,
-                restaurantName: restaurant.name
-            })
-        } else {
-            this.setState({
-                drawerOpen: false
-            })
-        }
-    }
 
     render() {
+
+        const { drawerOpen } = this.state
+
         return (
 
             <div className="container">
@@ -46,13 +37,20 @@ export class Restaurants extends Component {
                             <Jumbotron
                                 style={styles.jumbo}
                                 backgroundImage={restaurant.backgroundImageURL}
-                                onClick={() => this.viewRestaurant(restaurant)}>
+                                // onClick={() => this.viewRestaurant(restaurant)}
+                                onClick={() => this.setState({drawerOpen: !drawerOpen, restaurantName: restaurant.name})}
+                                >
                                 <h3 style={styles.h3}>{restaurant.name}</h3>
                                 <h4 style={styles.h4}>{restaurant.category}</h4>
                             </Jumbotron>
                         </div>
                     ))}
-                    <Drawer open={this.state.drawerOpen} width='75%' >
+                    <Drawer 
+                        open={drawerOpen} 
+                        width='75%'
+                        noTouchOpen={false} 
+                        noTouchClose={false}
+                        onChange={open => this.setState({drawerOpen: open})} >
                         {val =>
                             <ul style={{ opacity: 1 }}>
                                <h1>{this.state.restaurantName}</h1>
