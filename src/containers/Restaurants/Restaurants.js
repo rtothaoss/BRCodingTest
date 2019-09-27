@@ -2,15 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions'
 import Jumbotron from '../../components/Jumbotron/Jumbotron'
-import Button from '../../components/Button/Button'
+import MapDrawer from '../MapDrawer/MapDrawer'
 import Spinner from '../../components/Spinner/Spinner'
-import Header from '../../components/Header/Header'
 import Drawer from 'react-motion-drawer'
-import GoogleMaps from '../../utils/GoogleMaps/GoogleMaps'
-import BackButton from '../../assets/images/ic_webBack@2x.png'
-import MapButton from '../../assets/images/icon_map@2x.png'
-import axios from 'axios'
-
 
 
 export class Restaurants extends Component {
@@ -49,12 +43,12 @@ export class Restaurants extends Component {
         window.addEventListener('resize', this.handleWindowSizeChange)
     }
 
-    getRestaurantInfo() {
-        axios.get('http://sandbox.bottlerocketapps.com/BR_iOS_CodingExam_2015_Server/restaurants.json')
-            .then((res) => this.setState({ restaurantData: res.data.restaurants }, () => {
-            }))
-            .catch((err) => console.log(err))
-    }
+    // getRestaurantInfo() {
+    //     axios.get('http://sandbox.bottlerocketapps.com/BR_iOS_CodingExam_2015_Server/restaurants.json')
+    //         .then((res) => this.setState({ restaurantData: res.data.restaurants }, () => {
+    //         }))
+    //         .catch((err) => console.log(err))
+    // }
 
 
     render() {
@@ -96,65 +90,30 @@ export class Restaurants extends Component {
             show = <Spinner />
         }
 
-
-
-
         return (
 
             <div className="container">
                 <div className="row">
-                
                     {show}
-
                     <Drawer
                         open={drawerOpen}
                         width='75%'
                         noTouchOpen={false}
                         noTouchClose={false}
                         onChange={open => this.setState({ drawerOpen: open })} >
-                        <Jumbotron style={{ minHeight: '100vh', overflow: 'hidden', padding: '0px 0px', margin: '0px auto' }}>
-                            <Jumbotron
-                                style={styles.header2}
-                            >
-                                <Button
-                                    alt={'Back'}
-                                    src={BackButton}
-                                    style={{ height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px' }}
-
-
-                                />
-                                <p style={{ marginLeft: '25%', fontSize: '17px', color: '#FFFFFF', fontFamily: 'AvenirNextBold', margin: '0px auto', }}>Lunch Tyme</p>
-
-                                <Button
-                                    alt={'Map'}
-                                    src={MapButton}
-                                    style={{ height: '35px', width: '35px', marginRight: '2%', paddingBottom: '5px' }}
-                                />
-                            </Jumbotron>
-                            <Jumbotron className='container' style={styles.map}>
-                                <GoogleMaps
-                                    mapStyle={{ width: '100%', height: '100%', position: 'absolute', top: '0', right: '0', bottom: '0', left: '0' }}
-                                    selectedPlace={this.state.restaurantName}
-                                    lat={this.state.restaurantLat}
-                                    lng={this.state.restaurantLong}
-                                />
-
-                            </Jumbotron>
-                            <Jumbotron
-                                style={styles.header1}
-                            >
-                                <p style={{ margin: '0px auto', padding: '0px 0px', fontSize: '16px', fontFamily: 'AvenirNextBold', color: '#FFFFFF', marginLeft: '12px' }}>{this.state.restaurantName}</p>
-                                <p style={{ margin: '0px auto', padding: '0px 0px', fontSize: '12px', fontFamily: 'AvenirNextRegular', color: '#FFFFFF', marginLeft: '12px' }}>{this.state.restaurantCat}</p>
-                            </Jumbotron>
-                            <Jumbotron>
-                                <h4 style={{ marginTop: '16px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantAddress}</h4>
-                                <h4 style={{ marginLeft: '12px', fontSize: '16px' }}>{`${this.state.restaurantCity}, ${this.state.restaurantState} ${this.state.restaurantZip}`}</h4>
-                                <h4 style={{ marginTop: '26px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantPhone}</h4>
-                                <h4 style={{ marginTop: '26px', marginLeft: '12px', fontSize: '16px' }}>{this.state.restaurantTwitter}</h4>
-                            </Jumbotron>
-                        </Jumbotron>
-                    </Drawer>
-                    {/* <button onClick={this.tester}>TESTER</button> */}
+                        <MapDrawer 
+                            restaurantName={this.state.restaurantName}
+                            restaurantCat={this.state.restaurantCat}
+                            restaurantLat={this.state.restaurantLat}
+                            restaurantLong={this.state.restaurantLong}
+                            restaurantAddress={this.state.resturantAddress}
+                            restaurantCity={this.state.restaurantCity}
+                            restaurantState={this.state.restaurantState}
+                            restaurantZip={this.state.restaurantZip}
+                            restaurantPhone={this.state.restaurantPhone}
+                            restaurantTwitter={this.state.restaurantTwitter}
+                        />
+                    </Drawer>  
                 </div>
             </div>
         )
