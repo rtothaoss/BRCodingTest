@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Restaurants from './containers/Restaurants/Restaurants'
 import Header from './components/Header/Header'
 import Button from './components/Button/Button'
@@ -60,4 +61,4 @@ const styles = {
 }
 
 
-export default App;
+export default App

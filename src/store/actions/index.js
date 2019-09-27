@@ -1,1 +1,1 @@
-export { addRestaurantData } from './restaurantData.js'
+export { addRestaurantData, initRestaurantData } from './restaurantData'

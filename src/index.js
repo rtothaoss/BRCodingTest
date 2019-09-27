@@ -5,14 +5,14 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import restaurantDataReducer from './store/reducers/restaurantData'
 import './index.css';
-import App from './App';
+import App from './App'
 import * as serviceWorker from './serviceWorker';
 import './assets/fonts/AvenirNext-DemiBold.ttf'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    restaurantData: restaurantDataReducer
+    restData: restaurantDataReducer
 })
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))

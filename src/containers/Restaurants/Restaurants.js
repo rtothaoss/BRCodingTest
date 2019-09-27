@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../../store/actions'
 import Jumbotron from '../../components/Jumbotron/Jumbotron'
 import Button from '../../components/Button/Button'
+import Spinner from '../../components/Spinner/Spinner'
 import Header from '../../components/Header/Header'
 import Drawer from 'react-motion-drawer'
 import GoogleMaps from '../../utils/GoogleMaps/GoogleMaps'
@@ -29,14 +32,15 @@ export class Restaurants extends Component {
 
     }
 
+    componentDidMount() {
+        // this.getRestaurantInfo()
+        this.deviceUsed()
+        this.props.initRestData()
+    }
+
     handleWindowSizeChange = () => {
         this.setState({ width: window.innerWidth });
-      };
-
-    componentDidMount() {
-        this.getRestaurantInfo()
-        this.deviceUsed()
-    }
+    };
 
     deviceUsed() {
         this.setState({
@@ -58,35 +62,50 @@ export class Restaurants extends Component {
         const { drawerOpen, width } = this.state
         const isntMobile = width >= 500;
 
+        let show;
+
+        if (this.props.restData) {
+            show = (
+                this.props.restData.map(restaurant => (
+                    <div className="col-sm-6" style={isntMobile ? { padding: '15px 15px', overflow: 'hidden' } : { padding: '0px 0px', overflow: 'hidden' }} key={restaurant.name}>
+                        <Jumbotron
+                            style={styles.jumbo}
+                            backgroundImage={restaurant.backgroundImageURL}
+                            // onClick={() => this.viewRestaurant(restaurant)}
+                            onClick={() => this.setState({
+                                drawerOpen: !drawerOpen,
+                                restaurantName: restaurant.name,
+                                restaurantCat: restaurant.category,
+                                restaurantPhone: restaurant.contact.formattedPhone,
+                                restaurantTwitter: `@${restaurant.contact.twitter}`,
+                                restaurantAddress: restaurant.location.address,
+                                restaurantCity: restaurant.location.city,
+                                restaurantState: restaurant.location.state,
+                                restaurantZip: restaurant.location.postalCode,
+                                restaurantLat: restaurant.location.lat,
+                                restaurantLong: restaurant.location.lng
+                            })}
+                        >
+                            <h3 style={styles.h3}>{restaurant.name}</h3>
+                            <h4 style={styles.h4}>{restaurant.category}</h4>
+                        </Jumbotron>
+                    </div>
+                ))
+            )
+        } else {
+            show = <Spinner />
+        }
+
+
+
+
         return (
 
             <div className="container">
                 <div className="row">
-                    {this.state.restaurantData.map(restaurant => (
-                        <div className="col-sm-6" style={isntMobile ? {padding: '15px 15px', overflow: 'hidden'} : {padding: '0px 0px', overflow: 'hidden'}} key={restaurant.name}>
-                            <Jumbotron
-                                style={styles.jumbo}
-                                backgroundImage={restaurant.backgroundImageURL}
-                                // onClick={() => this.viewRestaurant(restaurant)}
-                                onClick={() => this.setState({
-                                    drawerOpen: !drawerOpen,
-                                    restaurantName: restaurant.name,
-                                    restaurantCat: restaurant.category,
-                                    restaurantPhone: restaurant.contact.formattedPhone,
-                                    restaurantTwitter: `@${restaurant.contact.twitter}`,
-                                    restaurantAddress: restaurant.location.address,
-                                    restaurantCity: restaurant.location.city,
-                                    restaurantState: restaurant.location.state,
-                                    restaurantZip: restaurant.location.postalCode,
-                                    restaurantLat: restaurant.location.lat,
-                                    restaurantLong: restaurant.location.lng
-                                })}
-                            >
-                                <h3 style={styles.h3}>{restaurant.name}</h3>
-                                <h4 style={styles.h4}>{restaurant.category}</h4>
-                            </Jumbotron>
-                        </div>
-                    ))}
+                
+                    {show}
+
                     <Drawer
                         open={drawerOpen}
                         width='75%'
@@ -97,24 +116,24 @@ export class Restaurants extends Component {
                             <Jumbotron
                                 style={styles.header2}
                             >
-                                    <Button
-                                        alt={'Back'}
-                                        src={BackButton}
-                                        style={{height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px'}}
-                                        
+                                <Button
+                                    alt={'Back'}
+                                    src={BackButton}
+                                    style={{ height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px' }}
 
-                                    />
-                                    <p style={{marginLeft: '25%', fontSize: '17px', color: '#FFFFFF', fontFamily: 'AvenirNextBold', margin: '0px auto',}}>Lunch Tyme</p>
-                             
-                                    <Button
-                                        alt={'Map'}
-                                        src={MapButton}
-                                        style={{height: '35px', width: '35px', marginRight: '2%', paddingBottom: '5px'}}
-                                    />
+
+                                />
+                                <p style={{ marginLeft: '25%', fontSize: '17px', color: '#FFFFFF', fontFamily: 'AvenirNextBold', margin: '0px auto', }}>Lunch Tyme</p>
+
+                                <Button
+                                    alt={'Map'}
+                                    src={MapButton}
+                                    style={{ height: '35px', width: '35px', marginRight: '2%', paddingBottom: '5px' }}
+                                />
                             </Jumbotron>
                             <Jumbotron className='container' style={styles.map}>
-                                    <GoogleMaps
-                                    mapStyle={{ width: '100%', height: '100%', position: 'absolute', top: '0', right: '0', bottom: '0', left: '0'}}
+                                <GoogleMaps
+                                    mapStyle={{ width: '100%', height: '100%', position: 'absolute', top: '0', right: '0', bottom: '0', left: '0' }}
                                     selectedPlace={this.state.restaurantName}
                                     lat={this.state.restaurantLat}
                                     lng={this.state.restaurantLong}
@@ -135,10 +154,13 @@ export class Restaurants extends Component {
                             </Jumbotron>
                         </Jumbotron>
                     </Drawer>
+                    {/* <button onClick={this.tester}>TESTER</button> */}
                 </div>
             </div>
         )
     }
+
+
 }
 const styles = {
     h3: {
@@ -206,4 +228,18 @@ const styles = {
     }
 }
 
-export default Restaurants
+const mapStateToProps = state => {
+    console.log(state.restData.restaurantData.restaurants)
+    return {
+        restData: state.restData.restaurantData.restaurants,
+        tester: state.tester
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        initRestData: () => dispatch(actions.initRestaurantData())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Restaurants)
