@@ -7,6 +7,7 @@ import Spinner from '../../components/Spinner/Spinner'
 import Drawer from 'react-motion-drawer'
 
 
+
 export class Restaurants extends Component {
 
     state = {
@@ -66,16 +67,17 @@ export class Restaurants extends Component {
                             style={styles.jumbo}
                             backgroundImage={restaurant.backgroundImageURL}
                             // onClick={() => this.viewRestaurant(restaurant)}
+
                             onClick={() => this.setState({
                                 drawerOpen: !drawerOpen,
                                 restaurantName: restaurant.name,
                                 restaurantCat: restaurant.category,
-                                restaurantPhone: restaurant.contact.formattedPhone,
-                                restaurantTwitter: `@${restaurant.contact.twitter}`,
+                                restaurantPhone: (restaurant.contact === null) ? '' : restaurant.contact.formattedPhone,
+                                restaurantTwitter: (restaurant.contact === null) ? '' : `@${restaurant.contact.twitter}`,
                                 restaurantAddress: restaurant.location.address,
                                 restaurantCity: restaurant.location.city,
                                 restaurantState: restaurant.location.state,
-                                restaurantZip: restaurant.location.postalCode,
+                                restaurantZip: (restaurant.location.postalCode === undefined) ? '' : restaurant.location.postalCode,
                                 restaurantLat: restaurant.location.lat,
                                 restaurantLong: restaurant.location.lng
                             })}
@@ -106,7 +108,7 @@ export class Restaurants extends Component {
                             restaurantCat={this.state.restaurantCat}
                             restaurantLat={this.state.restaurantLat}
                             restaurantLong={this.state.restaurantLong}
-                            restaurantAddress={this.state.resturantAddress}
+                            restaurantAddress={this.state.restaurantAddress}
                             restaurantCity={this.state.restaurantCity}
                             restaurantState={this.state.restaurantState}
                             restaurantZip={this.state.restaurantZip}
