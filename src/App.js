@@ -49,8 +49,6 @@ const styles = {
     fontFamily: 'AvenirNextBold',
     margin: '0px auto',
     paddingLeft: '4%',
-    // marginLeft: '47.5%'
-    
   },
   mapButton: {
     height: '35px',

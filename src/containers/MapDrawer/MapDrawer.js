@@ -4,7 +4,6 @@ import GoogleMaps from '../../utils/GoogleMaps/GoogleMaps'
 import Button from '../../components/Button/Button'
 import BackButton from '../../assets/images/ic_webBack@2x.png'
 import MapButton from '../../assets/images/icon_map@2x.png'
-import Header from '../../components/Header/Header'
 
 
 export class MapDrawer extends Component {
@@ -81,7 +80,6 @@ const styles = {
     },
     header: {
         backgroundColor: '#43E895',
-        // backgroundColor: 'black',
         display: 'flex',
         width: '100%',
         paddingTop: '45px',
@@ -89,12 +87,9 @@ const styles = {
     },
     header1: {
         backgroundColor: '#34b379',
-        // display: 'flex',
         width: '100%',
         paddingTop: '10px',
-        // paddingBottom: '10px',
         height: '60px',
-        // display: 'block'
     },
     header2: {
         backgroundColor: '#43E895',

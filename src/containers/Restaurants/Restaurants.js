@@ -11,7 +11,6 @@ import Drawer from 'react-motion-drawer'
 export class Restaurants extends Component {
 
     state = {
-        restaurantData: [],
         drawerOpen: false,
         restaurantName: '',
         restaurantCat: '',
@@ -28,7 +27,6 @@ export class Restaurants extends Component {
     }
 
     componentDidMount() {
-        // this.getRestaurantInfo()
         this.deviceUsed()
         this.props.initRestData()
     }
@@ -43,13 +41,6 @@ export class Restaurants extends Component {
         })
         window.addEventListener('resize', this.handleWindowSizeChange)
     }
-
-    // getRestaurantInfo() {
-    //     axios.get('http://sandbox.bottlerocketapps.com/BR_iOS_CodingExam_2015_Server/restaurants.json')
-    //         .then((res) => this.setState({ restaurantData: res.data.restaurants }, () => {
-    //         }))
-    //         .catch((err) => console.log(err))
-    // }
 
 
     render() {
@@ -66,8 +57,6 @@ export class Restaurants extends Component {
                         <Jumbotron
                             style={styles.jumbo}
                             backgroundImage={restaurant.backgroundImageURL}
-                            // onClick={() => this.viewRestaurant(restaurant)}
-
                             onClick={() => this.setState({
                                 drawerOpen: !drawerOpen,
                                 restaurantName: restaurant.name,
@@ -159,12 +148,9 @@ const styles = {
     },
     header1: {
         backgroundColor: '#34b379',
-        // display: 'flex',
         width: '100%',
         paddingTop: '10px',
-        // paddingBottom: '10px',
         height: '60px',
-        // display: 'block'
     },
     header2: {
         backgroundColor: '#43E895',
@@ -190,7 +176,6 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-    console.log(state.restData.restaurantData.restaurants)
     return {
         restData: state.restData.restaurantData.restaurants,
         tester: state.tester
