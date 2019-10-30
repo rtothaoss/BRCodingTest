@@ -13,11 +13,15 @@ export class MapDrawer extends Component {
             <Jumbotron
                 style={styles.header2}
             >
-                <Button
+                {/* <Button
                     alt={'Back'}
                     src={BackButton}
+                    href='#'
                     style={{ height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px' }}
-                />
+                    onClick={this.props.backOnClick}
+                /> */}
+                <a href='#'><img src={BackButton} alt='Back Button' onClick={this.props.backOnClick} style={{ height: '25px', width: '20px', marginLeft: '2%', paddingBottom: '2px' }}/></a>
+                
                 <p style={{ marginLeft: '25%', fontSize: '17px', color: '#FFFFFF', fontFamily: 'AvenirNextBold', margin: '0px auto', }}>Lunch Tyme</p>
 
                 <Button

@@ -5,6 +5,7 @@ import Jumbotron from '../../components/Jumbotron/Jumbotron'
 import MapDrawer from '../MapDrawer/MapDrawer'
 import Spinner from '../../components/Spinner/Spinner'
 import Drawer from 'react-motion-drawer'
+import './Restaurant.css'
 
 
 
@@ -92,7 +93,9 @@ export class Restaurants extends Component {
                         noTouchOpen={false}
                         noTouchClose={false}
                         onChange={open => this.setState({ drawerOpen: open })} >
+                        {/* <a href='#' className="close" onClick={() => this.setState({drawerOpen:!this.state.drawerOpen})}/> */}
                         <MapDrawer 
+                            backOnClick={() => this.setState({drawerOpen:!this.state.drawerOpen})}
                             restaurantName={this.state.restaurantName}
                             restaurantCat={this.state.restaurantCat}
                             restaurantLat={this.state.restaurantLat}
